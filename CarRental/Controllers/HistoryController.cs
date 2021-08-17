@@ -14,7 +14,12 @@ namespace CarRental.Controllers
 {
     public class HistoryController : Controller
     {
-        private CarRentalContext db = new CarRentalContext();
+        private CarRentalContext db;
+
+        public HistoryController(CarRentalContext db)
+        {
+            this.db = db;
+        }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Index(int CarId)
