@@ -22,7 +22,10 @@ namespace CarRental.Tests.Controllers
         [TestMethod]
         public void Index()
         {
-            
+            HistoryController controller = new HistoryController();
+            ViewResult result = controller.Index(1) as ViewResult;
+
+            Assert.IsNotNull(result);
         }
 
 
