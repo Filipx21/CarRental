@@ -22,7 +22,7 @@ namespace CarRental.Tests.Controllers
         [TestMethod]
         public void Index()
         {
- 
+            
         }
 
 
