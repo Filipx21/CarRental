@@ -1,0 +1,77 @@
+﻿@model IEnumerable<CarRental.Models.Order>
+@{
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <ul class="realization-list">
+        @foreach (var order in Model)
+        {
+            <li>
+                <a href="@Url.Action("Details", "Car", new { id = order.CarId })" class="data-table-img">
+                    <img src="@Path.Combine("/Content/Cars/", order.Car.PhotoUrl)"
+                         alt="@string.Format("zdjęcie-przedstawia-{0}-{1}", order.Car.Producer.ToLower(), order.Car.Model.ToLower())" class="data-table-img" />
+                </a>
+                <a href="@Url.Action("Details", "Car", new { id = order.Car.CarId })">
+                    <div class="realization-item-details">
+                        <h1>@order.Car.Producer - @order.Car.Model</h1>
+                        <span>@string.Format("Przebieg w dniu wypożyczenia: {0}km", order.StartMileage)</span>
+                        <span>@string.Format("Cena pojazdu za dzień: {0}", order.Car.CostPerDay)</span>
+                        <span>@string.Format("Wypożyczono dla: {0}", order.CustomerName)</span>
+                        <span>@string.Format("Kontakt: e-mail: {0}, numer telefonu: {1}", order.CustomerEmail, order.CustomerPhone)</span>
+                        <span>@string.Format("Data wypożyczenia: {0:dd-MM-yyyy}", order.DateCreated)</span>
+                    </div>
+                </a>
+                <div class="detail-buttons">
+                    @if (order.OrderStatus == CarRental.Models.OrderStatus.ForPickup)
+                    {
+                        <div class="detail-button">
+                            <a href="@Url.Action("Leave", "Realization", new { id = order.OrderId })">Zrezygnuj</a>
+                        </div>
+                    }
+                    @if (order.OrderStatus != CarRental.Models.OrderStatus.Realized && order.OrderStatus != CarRental.Models.OrderStatus.InProgress && order.OrderStatus != CarRental.Models.OrderStatus.Problems && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <div class="detail-button">
+                            <a href="@Url.Action("Realize", "Realization", new { id = order.OrderId })">Potwierdz odbiór</a>
+                        </div>
+                    }
+                    @if (order.OrderStatus == CarRental.Models.OrderStatus.InProgress && User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <div class="detail-button">
+                            <a href="@Url.Action("Finish", "Realization", new { id = order.OrderId })">Zakończ</a>
+                        </div>
+                    }
+                </div>
+            </li>
+        }
+    </ul>
+
+}
+else
+{
+    <div>Musisz sie zalogować aby mieć dostep do zawartości</div>
+}
+
+@section Scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndJqueryUI")
+
+    <script type="text/javascript">
+        $(function () {
+
+            $(".leave-btn").click(function () {
+                var toDelete = $(this).attr("data-id");
+
+                if (toDelete != '') {
+                    $.post("/Realization/Leave", { "id": toDelete }); // <- Dokończ w wolnej chwili!
+                }
+
+                return false;
+            });
+
+
+        });
+    </script>
+}

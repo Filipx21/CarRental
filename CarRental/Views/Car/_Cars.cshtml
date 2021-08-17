@@ -1,0 +1,40 @@
+﻿@model IEnumerable<CarRental.Models.Car>
+
+<div id="carList">
+    <table id="data-table">
+        @foreach (var car in Model)
+        {
+            <tr>
+
+                <td>
+                    <a href="@Url.Action("Details", "Car", new { id = car.CarId })" class="data-table-img">
+                        <img src="@Path.Combine("/Content/Cars/", car.PhotoUrl)"
+                             alt="@string.Format("zdjęcie-przedstawia-{0}-{1}", car.Producer.ToLower(), car.Model.ToLower())" class="data-table-img" />
+                    </a>
+                    <a class="data-table-description" href="@Url.Action("Details", "Car", new { id = car.CarId })">
+                        <h1>
+                            @car.Producer - @car.Model
+                            @if (!car.IsAvailable)
+                            {
+                                <span style="color: red;">[UKRYTY]</span>
+                            }
+                            else if (car.IsUsed)
+                            {
+                                <span style="color: greenyellow;">[W UŻYCIU]</span>
+                            }
+                        </h1>
+                        
+                        <div>
+                            <span>Przebieg: @String.Format("{0:0.##}", car.Mileage) </span>
+                            <span>Rok produkcji: @String.Format("{0:MM-yyy}", car.ProductionDate)</span>
+                            <span>Kolor: @car.Color</span>
+                            <span>Pojemność: @car.EngineCapacity</span>
+                            <span>Cena za dzień: @String.Format("{0:0.##zł}", car.CostPerDay)</span>
+                        </div>
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CarRental.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+@if (Request.IsAuthenticated)
+{
+    <div class="history">
+        <div class="title">
+            Historia ostatnich zamówień
+        </div>
+        <ul class="history-list">
+            @foreach (var order in Model)
+            {
+                <li class="history-item-content">
+                    <a class="history-item-link" href="@Url.Action("Details", "Car", new { id = order.Car.CarId })">
+                        <div class="history-item-details"> 
+                            <h1>@order.Car.Producer - @order.Car.Model</h1>
+                            <span>@string.Format("Data najmu: {0:dd-MM-yyyy}", order.DateCreated)</span>
+                            <span>@string.Format("Całkowity koszt: {0}zł", order.TotalCost)</span>
+                        </div>
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    
+   
+
+}
+else
+{
+    <div>Musisz sie zalogować aby mieć dostep do zawartości</div>
+}
+

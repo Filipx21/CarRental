@@ -1,0 +1,29 @@
+﻿@model IEnumerable<CarRental.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="history-wrapper">
+    <div class="history-title">Historia pojazdu</div>
+    <table class="history-table">
+        <tr class="history-head">
+            <th class="history-head-element">Data operacji</th>
+            <th class="history-head-element">Klient</th>
+            <th class="history-head-element">Koszt</th>
+            <th class="history-head-element">Przebieg na poczatku</th>
+            <th class="history-head-element">Przebieg na końcu</th>
+        </tr>
+        @foreach (var order in Model)
+        {
+            <tr class="history-body">
+                <td class="history-body-element">@order.DateCreated</td>
+                <td class="history-body-element">@order.CustomerEmail</td>
+                <td class="history-body-element">@order.TotalCost</td>
+                <td class="history-body-element">@order.StartMileage</td>
+                <td class="history-body-element">@order.StopMileage</td>
+            </tr>
+        }
+    </table>
+</div>

@@ -1,0 +1,106 @@
+﻿@model CarRental.ViewModels.FinishedOrder
+
+@{
+    ViewBag.Title = "Finish";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="login-form">
+    <div class="login-form-info">Finalizowanie operacji</div>
+    @using (@Html.BeginForm("Finish", "Realization", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div id="login-error">
+            @Html.ValidationMessage("loginerror", "")
+        </div>
+        
+        
+        <table id="login-table" style="margin-left: auto; margin-right: auto;">
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.OrderId, "Numer zamówienia:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.OrderId, new { @class = "login-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.OrderId)
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.StopMileage, "Przebieg pojazdu:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.StopMileage, new { @class = "login-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.StopMileage)
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.UserName, "Email użytkownika:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.UserName, new { @class = "login-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.UserName)
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.TotalCost, "Całkowity koszt:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.TotalCost, "{0:0.##}", new { @class = "login-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.TotalCost)
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.TotalDays, "Całkowita ilość dni:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.TotalDays, new { @class = "login-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.TotalDays)
+                    </div>
+                </td>
+            </tr>
+
+   
+
+            <tr class="login-form-element">
+                <td>
+                    <input type="submit" value="Zakończ operacje" class="login-form-submit" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+@section Scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndValidate")
+
+    <script>
+
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+
+        $.validator.methods.date = function (value, element) {
+            var date = value.split("-");
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
+        }
+
+    </script>
+}
+
+
+
+

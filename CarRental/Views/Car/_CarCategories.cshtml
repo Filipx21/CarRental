@@ -1,0 +1,12 @@
+﻿@model IEnumerable<CarRental.Models.Category>
+
+
+@foreach (var category in Model)
+{
+    
+    <li class="nav-list-element">
+        <a href="@Url.Action("List", "Car", new { categoryName = category.CategoryName.ToLower() })">
+            @category.CategoryName
+        </a>
+    </li>
+}

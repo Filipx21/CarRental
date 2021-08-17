@@ -1,0 +1,99 @@
+﻿@model CarRental.ViewModels.ChangeUserDataViewModel
+
+@{
+    ViewBag.Title = "ChangeUserData";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+<div class="login-form">
+    <div class="login-form-info">Dane użytkownika</div>
+    @using (@Html.BeginForm("ChangeUserData", "Manage"))
+    {
+        @Html.AntiForgeryToken()
+
+        <table id="login-table" class="login-form-table">
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.FirstName, "Imię:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.FirstName, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.FirstName)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.LastName, "Nazwisko:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.LastName, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.LastName)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Street, "Ulica:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Street, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Street)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Address, "Numer mieszkania:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Address, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Address)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.City, "Miasto:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.City, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.City)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.ZipCode, "Kod pocztowy:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.ZipCode, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.ZipCode)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Phone, "Numer telefonu:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Phone, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Phone)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Zmień dane" class="registration-form-submit" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+@section Scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndValidate")
+}
+

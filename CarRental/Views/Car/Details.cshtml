@@ -1,0 +1,61 @@
+﻿@model CarRental.Models.Car
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav>
+    <ul class="nav-list">
+        @Html.Action("CategoriesMenu")
+    </ul>
+</nav>
+
+<section>
+    <div class="content-container">
+        <div class="content-detail">
+            <div class="detail-image">
+                <img src="@Path.Combine("/Content/Cars/", Model.PhotoUrl)"
+                     alt="@string.Format("zdjęcie-przedstawia-{0}-{1}", Model.Producer.ToLower(), Model.Model.ToLower())" class="detail-image" />
+            </div>
+            <div class="detail-description">
+                <div class="data-table-description">
+                    <span class="detail-title">@string.Format("{0} {1}", Model.Producer, Model.Model)</span>
+                    <span>Typ: @Model.Category.CategoryName</span>
+                    <span>Przebieg: @string.Format("{0}", Model.Mileage)</span>
+                    <span>Rok produkcji: @string.Format("{0:yyyy}", Model.ProductionDate)</span>
+                    <span>Kolor: @Model.Color</span>
+                    <span>Pojemność: @string.Format("{0:0.##}", Model.EngineCapacity)</span>
+                    <span>Dostepny: @Model.IsAvailable</span>
+                    <span>Cena: @string.Format("{0:0.##}", Model.CostPerDay)</span>
+                    <span>Data zakupu: @string.Format("{0:dd-MM-yyyy}", Model.DateAdded)</span>
+
+                    <div class="detail-buttons">
+                        @if (!Model.IsUsed && Model.IsAvailable)
+                        {
+                            <div class="detail-button">
+                                <a href="@Url.Action("BookIt", "Realization", new { id = Model.CarId })">Zarezerwuj</a>
+                            </div>
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin") && !Model.IsUsed)
+                        {
+                            <div class="detail-button">
+                                <a href="@Url.Action("AddCar", "Manage", new { CarId = Model.CarId })">Edytuj</a>
+                            </div>
+                            <div class="detail-button">
+                                <a href="@Url.Action("HideCar", "Manage", new { CarId = Model.CarId })">Pokaż/Ukryj</a>
+                            </div>
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                        {
+                            <div class="detail-button">
+                                <a href="@Url.Action("Index", "History", new { CarId = Model.CarId })">Historia pojazdu</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

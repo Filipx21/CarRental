@@ -1,0 +1,155 @@
+﻿@model CarRental.ViewModels.EditCarViewModel
+
+@{
+    ViewBag.Title = "AddCar";
+    Layout = "~/Views/Shared/_ManageLayout.cshtml";
+}
+
+
+<div class="login-form">
+    <div class="login-form-info">Dane pojazdu</div>
+    @if (Model.Confirm == true)
+    {
+        <div class="login-form-info">
+            Pomyślnie wprowadzono zmiany!
+        </div>
+    }
+    @using (@Html.BeginForm("AddCar", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="error-summary-centered">
+            @Html.ValidationSummary()
+        </div>
+
+        @Html.HiddenFor(o => o.Car.CarId)
+
+        @*@Html.HiddenFor(o => o.Car.DateAdded)*@
+
+        @Html.HiddenFor(o => o.Car.PhotoUrl)
+
+        <table id="login-table" class="login-form-table">
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.Producer, "Producent:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.Producer, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.Producer)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+
+
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.Model, "Model:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.Model, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.Model)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Categories, "Model:")</td>
+                <td>
+                    @Html.DropDownListFor(m => m.Car.CategoryId, new SelectList(Model.Categories, "CategoryId", "CategoryName", Model.Categories.First().CategoryId), new { @class = "registration-form-input" })
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.EngineCapacity, "Pojemność silnika:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.EngineCapacity, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.EngineCapacity)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.ProductionDate, "Data produkcji:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.ProductionDate, "{0:yyyy-MM-dd}", new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.ProductionDate)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.Mileage, "Przebieg:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.Mileage, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.Mileage)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.Color, "Kolor:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.Color, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.Color)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            <tr class="login-form-element">
+                <td class="login-form-label">@Html.LabelFor(o => o.Car.CostPerDay, "Koszta najmy za dzień:")</td>
+                <td>
+                    @Html.TextBoxFor(o => o.Car.CostPerDay, new { @class = "registration-form-input" })
+                    <div class="login-validation-message">
+                        @Html.ValidationMessageFor(o => o.Car.CostPerDay)
+                    </div>
+                </td>
+                <td></td>
+            </tr>
+            @if (ViewBag.EditMode == 0)
+            {
+                <tr>
+                    <td colspan="3">
+                        <div class="upload">
+                            <input type="file" name="file" />
+                        </div>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" value="Zapisz" class="registration-form-submit" />
+                </td>
+            </tr>
+        </table>
+    }
+</div>
+@section Scripts
+{
+    @System.Web.Optimization.Scripts.Render("~/bundles/jqueryAndValidate")
+
+    <script>
+
+        $.validator.methods.range = function (value, element, param) {
+            var globalizedValue = value.replace(",", ".");
+            return this.optional(element) || (globalizedValue >= param[0] && globalizedValue <= param[1]);
+        }
+
+        $.validator.methods.number = function (value, element) {
+            return this.optional(element) || /-?(?:\d+|\d{1,3}(?:[\s\.,]\d{3})+)(?:[\.,]\d+)?$/.test(value);
+        }
+
+        $.validator.methods.date = function (value, element) {
+            var date = value.split("-");
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(date[2], date[1], date[0]).toString());
+        }
+       
+    </script>
+}
+
+
+
