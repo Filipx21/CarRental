@@ -40,5 +40,6 @@ namespace CarRental.Controllers.Tests
 
             Assert.IsNotNull(result);
         }
+
     }
 }

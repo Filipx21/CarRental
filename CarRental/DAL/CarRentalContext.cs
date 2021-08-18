@@ -23,8 +23,8 @@ namespace CarRental.DAL
             return new CarRentalContext();
         }
 
-        public DbSet<Car> Cars { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public virtual DbSet<Car> Cars { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

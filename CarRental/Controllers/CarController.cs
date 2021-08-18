@@ -15,8 +15,13 @@ namespace CarRental.Controllers
 {
     public class CarController : Controller
     {
-        CarRentalContext db = new CarRentalContext();
+        CarRentalContext db;
         private ApplicationUserManager _userManager;
+
+        public CarController(CarRentalContext db)
+        {
+            this.db = db;
+        }
 
         public ApplicationUserManager UserManager
         {
@@ -86,7 +91,8 @@ namespace CarRental.Controllers
         public ActionResult Details(int id)
         {
             var car = db.Cars
-                .Find(id);
+                .Where(x => x.CarId == id)
+                .Single();
             return View(car);
         }
 
