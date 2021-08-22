@@ -20,15 +20,15 @@
             </div>
             <div class="detail-description">
                 <div class="data-table-description">
-                    <span class="detail-title">@string.Format("{0} {1}", Model.Producer, Model.Model)</span>
-                    <span>Typ: @Model.Category.CategoryName</span>
-                    <span>Przebieg: @string.Format("{0}", Model.Mileage)</span>
-                    <span>Rok produkcji: @string.Format("{0:yyyy}", Model.ProductionDate)</span>
-                    <span>Kolor: @Model.Color</span>
-                    <span>Pojemność: @string.Format("{0:0.##}", Model.EngineCapacity)</span>
-                    <span>Dostepny: @Model.IsAvailable</span>
-                    <span>Cena: @string.Format("{0:0.##}", Model.CostPerDay)</span>
-                    <span>Data zakupu: @string.Format("{0:dd-MM-yyyy}", Model.DateAdded)</span>
+                    <div class="detail-title">@string.Format("{0} {1}", Model.Producer, Model.Model)</div>
+                    <div>Typ: @Model.Category.CategoryName</div>
+                    <div>Przebieg: @string.Format("{0}", Model.Mileage)</div>
+                    <div>Rok produkcji: @string.Format("{0:yyyy}", Model.ProductionDate)</div>
+                    <div>Kolor: @Model.Color</div>
+                    <div>Pojemność: @string.Format("{0:0.##}", Model.EngineCapacity)</div>
+                    <div>Dostepny: @Model.IsAvailable</div>
+                    <div>Cena: @string.Format("{0:0.##}", Model.CostPerDay)</div>
+                    <div>Data zakupu: @string.Format("{0:dd-MM-yyyy}", Model.DateAdded)</div>
 
                     <div class="detail-buttons">
                         @if (!Model.IsUsed && Model.IsAvailable)

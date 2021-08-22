@@ -283,7 +283,8 @@ section table {
 }
 
 .data-table-description {
-    height: 300px;
+    display: flex;
+    flex-direction: column;
     margin-top: 2px;
     margin-bottom: 2px;
     margin-left: 40px;
